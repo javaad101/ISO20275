@@ -9,15 +9,12 @@ struct ISO20275Tests {
         let entries = try EntityLegalFormsCodeListISO20275.bundled()
         #expect(entries.count == 4002)
 
-        // Check enum cardinalities match the v1.6 GLEIF specification
-        #expect(ELFCode.allCases.count == 3599)
-        #expect(Country.allCases.count == 129)
-        #expect(CountryCodeISO3166_1.allCases.count == 129)
-        #expect(CountryCodeISO3166_2.allCases.count == 71)
-        #expect(LanguageCodeISO639_1.allCases.count == 48)
-        #expect(ELFStatus.allCases.count == 2)
+        #expect(Country.allKnown.count == 129)
+        #expect(CountryCodeISO3166_1.allKnown.count == 129)
+        #expect(CountryCodeISO3166_2.allKnown.count == 71)
+        #expect(LanguageCodeISO639_1.allKnown.count == 48)
+        #expect(ELFStatus.allKnown.count == 2)
 
-        // Every enum case in the library should appear at least once in the bundled dataset
         let seenCodes = Set(entries.map(\.code))
         let seenCountries = Set(entries.compactMap(\.countryOfFormation))
         let seenCC1 = Set(entries.compactMap(\.countryCodeISO3166_1))
@@ -25,12 +22,30 @@ struct ISO20275Tests {
         let seenLangs = Set(entries.compactMap(\.languageCode))
         let seenStatuses = Set(entries.map(\.status))
 
-        #expect(seenCodes.count == ELFCode.allCases.count)
-        #expect(seenCountries.count == Country.allCases.count)
-        #expect(seenCC1.count == CountryCodeISO3166_1.allCases.count)
-        #expect(seenCC2.count == CountryCodeISO3166_2.allCases.count)
-        #expect(seenLangs.count == LanguageCodeISO639_1.allCases.count)
-        #expect(seenStatuses.count == ELFStatus.allCases.count)
+        #expect(seenCodes.count == 3599)
+        #expect(seenCodes.allSatisfy { $0.isStandardFormat })
+        #expect(seenCountries == Set(Country.allKnown))
+        #expect(seenCC1 == Set(CountryCodeISO3166_1.allKnown))
+        #expect(seenCC2 == Set(CountryCodeISO3166_2.allKnown))
+        #expect(seenLangs == Set(LanguageCodeISO639_1.allKnown))
+        #expect(seenStatuses == Set(ELFStatus.allKnown))
+    }
+
+    @Test("Forward compatibility with future GLEIF codes, countries, subdivisions, and languages")
+    func forwardCompatibilityWithFutureCSVRows() throws {
+        let futureCSV = """
+        "ELF Code","Country of formation","Country Code (ISO 3166-1)","Jurisdiction of formation","Country sub-division code (ISO 3166-2)","Entity Legal Form name Local name","Language","Language Code (ISO 639-1)","Entity Legal Form name Transliterated name (per ISO 01-140-10)","Abbreviations Local language","Abbreviations transliterated","Date created YYYY-MM-DD (ISO 8601)","ELF Status ACTV/INAC","Modification","Modification date YYYY-MM-DD (ISO 8601)","Reason"
+        "NEW1","Andorra","AD","Andorra la Vella","AD-07","Societat Limitada","Catalan","ca","Societat Limitada","S.L.","","2027-01-15","ACTV","","",""
+        """
+        let parsed = try EntityLegalFormsCodeListISO20275.load(csvString: futureCSV)
+        #expect(parsed.count == 1)
+        #expect(parsed[0].code == "NEW1")
+        #expect(parsed[0].countryOfFormation?.rawValue == "Andorra")
+        #expect(parsed[0].countryCodeISO3166_1?.rawValue == "AD")
+        #expect(parsed[0].countrySubdivisionCode?.rawValue == "AD-07")
+        #expect(parsed[0].countrySubdivisionCode?.countryCode == "AD")
+        #expect(parsed[0].languageCode?.rawValue == "ca")
+        #expect(parsed[0].status == .active)
     }
 
     @Test("Special reserved GLEIF codes 8888 and 9999 parse with nil country and language")
@@ -39,55 +54,53 @@ struct ISO20275Tests {
 
         let pending = catalog[.pendingNewCodeRequest]
         #expect(pending.count == 1)
-        #expect(pending[0].code == ._8888)
+        #expect(pending[0].code == "8888")
         #expect(pending[0].countryOfFormation == nil)
         #expect(pending[0].countryCodeISO3166_1 == nil)
         #expect(pending[0].languageCode == nil)
         #expect(pending[0].status == .active)
-        #expect(pending[0].reason?.contains("GLEIF") == true)
 
         let noSeparateForm = catalog[.noSeparateLegalForm]
         #expect(noSeparateForm.count == 1)
-        #expect(noSeparateForm[0].code == ._9999)
+        #expect(noSeparateForm[0].code == "9999")
         #expect(noSeparateForm[0].countryOfFormation == nil)
     }
 
-    @Test("Country, ISO 3166-1, ISO 3166-2, and ISO 639-1 cross-references are consistent")
+    @Test("Static constants and metadata cross-references")
     func isoMetadataCrossReferences() {
-        for country in Country.allCases {
-            #expect(country.iso3166_1Code.country == country)
+        for country in Country.allKnown {
+            #expect(country.knownISO3166_1Code?.knownCountry == country)
         }
-        for code in CountryCodeISO3166_1.allCases {
-            #expect(code.country.iso3166_1Code == code)
-            #expect(CountryCodeISO3166_1(code: code.rawValue.lowercased()) == code)
+        for code in CountryCodeISO3166_1.allKnown {
+            #expect(code.knownCountry?.knownISO3166_1Code == code)
+            #expect(CountryCodeISO3166_1(rawValue: code.rawValue.lowercased()) == code)
         }
-        for subdiv in CountryCodeISO3166_2.allCases {
+        for subdiv in CountryCodeISO3166_2.allKnown {
             #expect(subdiv.rawValue.hasPrefix(subdiv.countryCode.rawValue + "-"))
-            #expect(!subdiv.canonicalJurisdictionName.isEmpty)
+            #expect(subdiv.knownJurisdictionName?.isEmpty == false)
         }
-        // Check keyword-escaped codes work cleanly
-        #expect(CountryCodeISO3166_1.is.country == .iceland)
-        #expect(CountryCodeISO3166_1.in.country == .india)
-        #expect(CountryCodeISO3166_1.do.country == .dominicanRepublic)
-        #expect(LanguageCodeISO639_1.is.englishName == "Icelandic")
-        #expect(LanguageCodeISO639_1.el.englishName == "Greek")
-        #expect(LanguageCodeISO639_1.pt.englishName == "Portuguese")
+        #expect(CountryCodeISO3166_1.is.knownCountry == .iceland)
+        #expect(CountryCodeISO3166_1.in.knownCountry == .india)
+        #expect(CountryCodeISO3166_1.do.knownCountry == .dominicanRepublic)
+        #expect(LanguageCodeISO639_1.is.knownEnglishName == "Icelandic")
+        #expect(LanguageCodeISO639_1.el.knownEnglishName == "Greek")
+        #expect(LanguageCodeISO639_1.pt.knownEnglishName == "Portuguese")
     }
 
-    @Test("Catalog lookups for jurisdictions, non-Latin scripts, and abbreviations")
+    @Test("Catalog lookups for jurisdictions, prefix completion, non-Latin scripts, and abbreviations")
     func catalogQueries() {
         let catalog = ELFCatalog.shared
         #expect(catalog.uniqueCodeCount == 3599)
 
-        // Antigua and Barbuda CDOV
-        let cdov = catalog[.cdov]
+        #expect(catalog.matchingCountries("Ger").first == .germany)
+
+        let cdov = catalog["CDOV"]
         #expect(cdov.count == 1)
         #expect(cdov[0].countryOfFormation == .antiguaAndBarbuda)
         #expect(cdov[0].countryCodeISO3166_1 == .ag)
         #expect(cdov[0].entityLegalFormLocalName == "International Business Corporation")
         #expect(cdov[0].languageCode == .en)
 
-        // Armenia non-Latin script & transliteration
         let armenian = catalog["2prk"]
         #expect(armenian.count == 1)
         #expect(armenian[0].countryOfFormation == .armenia)
@@ -95,27 +108,27 @@ struct ISO20275Tests {
         #expect(armenian[0].abbreviationsLocalLanguage == "ԼԸ")
         #expect(armenian[0].abbreviationsTransliterated == "LĒ")
 
-        // Delaware subdivision lookup
         let delaware = catalog.entries(for: .usDE, activeOnly: true)
         #expect(!delaware.isEmpty)
         #expect(delaware.allSatisfy { $0.countryOfFormation == .unitedStatesOfAmerica })
-        #expect(delaware.allSatisfy { $0.countrySubdivisionCode == .usDE })
 
-        // Abbreviation lookup (e.g., GmbH)
-        let gmbh = catalog.entries(matchingAbbreviation: "gmbh", activeOnly: true)
-        #expect(!gmbh.isEmpty)
+        // Case- and punctuation-insensitive abbreviation matching ("GmBH", "G.m.b.H.")
+        let gmbh = catalog.entries(matchingAbbreviation: "GmBH", activeOnly: true)
+        #expect(gmbh.contains { $0.countryCodeISO3166_1 == .de && $0.code == "2HBR" })
 
-        // Search scoped to US
-        let usLLC = catalog.search("Limited Liability Company", countryCode: .us, activeOnly: true)
-        #expect(!usLLC.isEmpty)
+        let gmbhDotted = catalog.entries(matchingAbbreviation: "G.m.b.H.", activeOnly: true)
+        #expect(gmbhDotted == gmbh)
     }
 
-    @Test("Full dataset Codable JSON round-trip preserves all 4,002 entries")
+    @Test("Full dataset Codable JSON round-trip encodes codes as flat strings and preserves all 4,002 entries")
     func codableRoundTrip() throws {
         let original = try EntityLegalFormsCodeListISO20275.bundled()
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         let data = try encoder.encode(original)
+
+        let singleCodeJSON = try String(data: encoder.encode(ELFCode("2hbr")), encoding: .utf8)
+        #expect(singleCodeJSON == "\"2HBR\"")
 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601

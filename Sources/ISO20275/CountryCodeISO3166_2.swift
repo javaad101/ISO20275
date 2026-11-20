@@ -1,242 +1,334 @@
 import Foundation
 
-/// ISO 3166-2 country subdivision code used in the ISO 20275 Entity Legal Forms (ELF) Code List.
-public enum CountryCodeISO3166_2: String, CaseIterable, Codable, Hashable, Sendable, CustomStringConvertible {
-    /// Abu Dhabi (`AE-AZ`).
-    case aeAZ = "AE-AZ"
-    /// Dubai (`AE-DU`).
-    case aeDU = "AE-DU"
-    /// Ras Al Khaimah (`AE-RK`).
-    case aeRK = "AE-RK"
-    /// Flemish Region (`BE-VLG`).
-    case beVLG = "BE-VLG"
-    /// Alberta (`CA-AB`).
-    case caAB = "CA-AB"
-    /// British Columbia (`CA-BC`).
-    case caBC = "CA-BC"
-    /// Manitoba (`CA-MB`).
-    case caMB = "CA-MB"
-    /// New Brunswick (`CA-NB`).
-    case caNB = "CA-NB"
-    /// Newfoundland and Labrador (`CA-NL`).
-    case caNL = "CA-NL"
-    /// Nova Scotia (`CA-NS`).
-    case caNS = "CA-NS"
-    /// Northwest Territories (`CA-NT`).
-    case caNT = "CA-NT"
-    /// Ontario (`CA-ON`).
-    case caON = "CA-ON"
-    /// Prince Edward Island (`CA-PE`).
-    case caPE = "CA-PE"
-    /// Quebec (`CA-QC`).
-    case caQC = "CA-QC"
-    /// Saskatchewan (`CA-SK`).
-    case caSK = "CA-SK"
-    /// Northern Ireland (`GB-NIR`).
-    case gbNIR = "GB-NIR"
-    /// Scotland (`GB-SCT`).
-    case gbSCT = "GB-SCT"
-    /// Nevis (`KN-N`).
-    case knN = "KN-N"
-    /// Labuan (`MY-15`).
-    case my15 = "MY-15"
-    /// Madeira (`PT-30`).
-    case pt30 = "PT-30"
-    /// Alaska (`US-AK`).
-    case usAK = "US-AK"
-    /// Alabama (`US-AL`).
-    case usAL = "US-AL"
-    /// Arkansas (`US-AR`).
-    case usAR = "US-AR"
-    /// Arizona (`US-AZ`).
-    case usAZ = "US-AZ"
-    /// California (`US-CA`).
-    case usCA = "US-CA"
-    /// Colorado (`US-CO`).
-    case usCO = "US-CO"
-    /// Connecticut (`US-CT`).
-    case usCT = "US-CT"
-    /// District of Columbia (`US-DC`).
-    case usDC = "US-DC"
-    /// Delaware (`US-DE`).
-    case usDE = "US-DE"
-    /// Florida (`US-FL`).
-    case usFL = "US-FL"
-    /// Georgia (`US-GA`).
-    case usGA = "US-GA"
-    /// Hawaii (`US-HI`).
-    case usHI = "US-HI"
-    /// Iowa (`US-IA`).
-    case usIA = "US-IA"
-    /// Idaho (`US-ID`).
-    case usID = "US-ID"
-    /// Illinois (`US-IL`).
-    case usIL = "US-IL"
-    /// Indiana (`US-IN`).
-    case usIN = "US-IN"
-    /// Kansas (`US-KS`).
-    case usKS = "US-KS"
-    /// Kentucky (`US-KY`).
-    case usKY = "US-KY"
-    /// Louisiana (`US-LA`).
-    case usLA = "US-LA"
-    /// Massachusetts (`US-MA`).
-    case usMA = "US-MA"
-    /// Maryland (`US-MD`).
-    case usMD = "US-MD"
-    /// Maine (`US-ME`).
-    case usME = "US-ME"
-    /// Michigan (`US-MI`).
-    case usMI = "US-MI"
-    /// Minnesota (`US-MN`).
-    case usMN = "US-MN"
-    /// Missouri (`US-MO`).
-    case usMO = "US-MO"
-    /// Mississippi (`US-MS`).
-    case usMS = "US-MS"
-    /// Montana (`US-MT`).
-    case usMT = "US-MT"
-    /// North Carolina (`US-NC`).
-    case usNC = "US-NC"
-    /// North Dakota (`US-ND`).
-    case usND = "US-ND"
-    /// Nebraska (`US-NE`).
-    case usNE = "US-NE"
-    /// New Hampshire (`US-NH`).
-    case usNH = "US-NH"
-    /// New Jersey (`US-NJ`).
-    case usNJ = "US-NJ"
-    /// New Mexico (`US-NM`).
-    case usNM = "US-NM"
-    /// Nevada (`US-NV`).
-    case usNV = "US-NV"
-    /// New York (`US-NY`).
-    case usNY = "US-NY"
-    /// Ohio (`US-OH`).
-    case usOH = "US-OH"
-    /// Oklahoma (`US-OK`).
-    case usOK = "US-OK"
-    /// Oregon (`US-OR`).
-    case usOR = "US-OR"
-    /// Pennsylvania (`US-PA`).
-    case usPA = "US-PA"
-    /// Rhode Island (`US-RI`).
-    case usRI = "US-RI"
-    /// South Carolina (`US-SC`).
-    case usSC = "US-SC"
-    /// South Dakota (`US-SD`).
-    case usSD = "US-SD"
-    /// Tennessee (`US-TN`).
-    case usTN = "US-TN"
-    /// Texas (`US-TX`).
-    case usTX = "US-TX"
-    /// Utah (`US-UT`).
-    case usUT = "US-UT"
-    /// Virginia (`US-VA`).
-    case usVA = "US-VA"
-    /// Vermont (`US-VT`).
-    case usVT = "US-VT"
-    /// Washington (`US-WA`).
-    case usWA = "US-WA"
-    /// Wisconsin (`US-WI`).
-    case usWI = "US-WI"
-    /// West Virginia (`US-WV`).
-    case usWV = "US-WV"
-    /// Wyoming (`US-WY`).
-    case usWY = "US-WY"
+/// ISO 3166-2 country subdivision code (e.g., `"US-DE"`, `"CA-NS"`, `"GB-SCT"`).
+///
+/// Modeled as an extensible `RawRepresentable` value type with `static let` constants so newly
+/// added sub-national jurisdictions in future GLEIF releases load seamlessly.
+public struct CountryCodeISO3166_2: RawRepresentable, Hashable, Codable, Sendable, CustomStringConvertible, ExpressibleByStringLiteral {
+    public let rawValue: String
 
-    /// Case-insensitive initializer from an ISO 3166-2 code (e.g., `"us-de"` or `"US-DE"`).
-    public init?(code: String) {
-        self.init(rawValue: code.trimmingCharacters(in: .whitespacesAndNewlines).uppercased())
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .uppercased()
+    }
+
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(rawValue: value)
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.init(rawValue: try container.decode(String.self))
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
     }
 
     public var description: String { rawValue }
 
-    /// Canonical English subdivision / jurisdiction name (e.g., `"Delaware"` for `.usDE`).
-    public var canonicalJurisdictionName: String {
-        switch self {
-        case .aeAZ: return "Abu Dhabi"
-        case .aeDU: return "Dubai"
-        case .aeRK: return "Ras Al Khaimah"
-        case .beVLG: return "Flemish Region"
-        case .caAB: return "Alberta"
-        case .caBC: return "British Columbia"
-        case .caMB: return "Manitoba"
-        case .caNB: return "New Brunswick"
-        case .caNL: return "Newfoundland and Labrador"
-        case .caNS: return "Nova Scotia"
-        case .caNT: return "Northwest Territories"
-        case .caON: return "Ontario"
-        case .caPE: return "Prince Edward Island"
-        case .caQC: return "Quebec"
-        case .caSK: return "Saskatchewan"
-        case .gbNIR: return "Northern Ireland"
-        case .gbSCT: return "Scotland"
-        case .knN: return "Nevis"
-        case .my15: return "Labuan"
-        case .pt30: return "Madeira"
-        case .usAK: return "Alaska"
-        case .usAL: return "Alabama"
-        case .usAR: return "Arkansas"
-        case .usAZ: return "Arizona"
-        case .usCA: return "California"
-        case .usCO: return "Colorado"
-        case .usCT: return "Connecticut"
-        case .usDC: return "District of Columbia"
-        case .usDE: return "Delaware"
-        case .usFL: return "Florida"
-        case .usGA: return "Georgia"
-        case .usHI: return "Hawaii"
-        case .usIA: return "Iowa"
-        case .usID: return "Idaho"
-        case .usIL: return "Illinois"
-        case .usIN: return "Indiana"
-        case .usKS: return "Kansas"
-        case .usKY: return "Kentucky"
-        case .usLA: return "Louisiana"
-        case .usMA: return "Massachusetts"
-        case .usMD: return "Maryland"
-        case .usME: return "Maine"
-        case .usMI: return "Michigan"
-        case .usMN: return "Minnesota"
-        case .usMO: return "Missouri"
-        case .usMS: return "Mississippi"
-        case .usMT: return "Montana"
-        case .usNC: return "North Carolina"
-        case .usND: return "North Dakota"
-        case .usNE: return "Nebraska"
-        case .usNH: return "New Hampshire"
-        case .usNJ: return "New Jersey"
-        case .usNM: return "New Mexico"
-        case .usNV: return "Nevada"
-        case .usNY: return "New York"
-        case .usOH: return "Ohio"
-        case .usOK: return "Oklahoma"
-        case .usOR: return "Oregon"
-        case .usPA: return "Pennsylvania"
-        case .usRI: return "Rhode Island"
-        case .usSC: return "South Carolina"
-        case .usSD: return "South Dakota"
-        case .usTN: return "Tennessee"
-        case .usTX: return "Texas"
-        case .usUT: return "Utah"
-        case .usVA: return "Virginia"
-        case .usVT: return "Vermont"
-        case .usWA: return "Washington"
-        case .usWI: return "Wisconsin"
-        case .usWV: return "West Virginia"
-        case .usWY: return "Wyoming"
-        }
-    }
-
-    /// Parent ISO 3166-1 alpha-2 country code.
+    /// Parent ISO 3166-1 alpha-2 country code extracted from the prefix before `"-"`.
     public var countryCode: CountryCodeISO3166_1 {
-        let prefix = String(rawValue.prefix(2))
-        return CountryCodeISO3166_1(rawValue: prefix)!
+        let prefix = rawValue.split(separator: "-", maxSplits: 1).first.map(String.init) ?? rawValue
+        return CountryCodeISO3166_1(rawValue: prefix)
     }
 
-    /// Parent ``Country`` of formation.
-    public var country: Country {
-        countryCode.country
+    /// Canonical English subdivision / jurisdiction name, if known in the v1.6 registry.
+    public var knownJurisdictionName: String? {
+        Self.jurisdictionNames[self]
     }
+
+    /// Abu Dhabi (`AE-AZ`).
+    public static let aeAZ = CountryCodeISO3166_2(rawValue: "AE-AZ")
+    /// Dubai (`AE-DU`).
+    public static let aeDU = CountryCodeISO3166_2(rawValue: "AE-DU")
+    /// Ras Al Khaimah (`AE-RK`).
+    public static let aeRK = CountryCodeISO3166_2(rawValue: "AE-RK")
+    /// Flemish Region (`BE-VLG`).
+    public static let beVLG = CountryCodeISO3166_2(rawValue: "BE-VLG")
+    /// Alberta (`CA-AB`).
+    public static let caAB = CountryCodeISO3166_2(rawValue: "CA-AB")
+    /// British Columbia (`CA-BC`).
+    public static let caBC = CountryCodeISO3166_2(rawValue: "CA-BC")
+    /// Manitoba (`CA-MB`).
+    public static let caMB = CountryCodeISO3166_2(rawValue: "CA-MB")
+    /// New Brunswick (`CA-NB`).
+    public static let caNB = CountryCodeISO3166_2(rawValue: "CA-NB")
+    /// Newfoundland and Labrador (`CA-NL`).
+    public static let caNL = CountryCodeISO3166_2(rawValue: "CA-NL")
+    /// Nova Scotia (`CA-NS`).
+    public static let caNS = CountryCodeISO3166_2(rawValue: "CA-NS")
+    /// Northwest Territories (`CA-NT`).
+    public static let caNT = CountryCodeISO3166_2(rawValue: "CA-NT")
+    /// Ontario (`CA-ON`).
+    public static let caON = CountryCodeISO3166_2(rawValue: "CA-ON")
+    /// Prince Edward Island (`CA-PE`).
+    public static let caPE = CountryCodeISO3166_2(rawValue: "CA-PE")
+    /// Quebec (`CA-QC`).
+    public static let caQC = CountryCodeISO3166_2(rawValue: "CA-QC")
+    /// Saskatchewan (`CA-SK`).
+    public static let caSK = CountryCodeISO3166_2(rawValue: "CA-SK")
+    /// Northern Ireland (`GB-NIR`).
+    public static let gbNIR = CountryCodeISO3166_2(rawValue: "GB-NIR")
+    /// Scotland (`GB-SCT`).
+    public static let gbSCT = CountryCodeISO3166_2(rawValue: "GB-SCT")
+    /// Nevis (`KN-N`).
+    public static let knN = CountryCodeISO3166_2(rawValue: "KN-N")
+    /// Labuan (`MY-15`).
+    public static let my15 = CountryCodeISO3166_2(rawValue: "MY-15")
+    /// Madeira (`PT-30`).
+    public static let pt30 = CountryCodeISO3166_2(rawValue: "PT-30")
+    /// Alaska (`US-AK`).
+    public static let usAK = CountryCodeISO3166_2(rawValue: "US-AK")
+    /// Alabama (`US-AL`).
+    public static let usAL = CountryCodeISO3166_2(rawValue: "US-AL")
+    /// Arkansas (`US-AR`).
+    public static let usAR = CountryCodeISO3166_2(rawValue: "US-AR")
+    /// Arizona (`US-AZ`).
+    public static let usAZ = CountryCodeISO3166_2(rawValue: "US-AZ")
+    /// California (`US-CA`).
+    public static let usCA = CountryCodeISO3166_2(rawValue: "US-CA")
+    /// Colorado (`US-CO`).
+    public static let usCO = CountryCodeISO3166_2(rawValue: "US-CO")
+    /// Connecticut (`US-CT`).
+    public static let usCT = CountryCodeISO3166_2(rawValue: "US-CT")
+    /// District of Columbia (`US-DC`).
+    public static let usDC = CountryCodeISO3166_2(rawValue: "US-DC")
+    /// Delaware (`US-DE`).
+    public static let usDE = CountryCodeISO3166_2(rawValue: "US-DE")
+    /// Florida (`US-FL`).
+    public static let usFL = CountryCodeISO3166_2(rawValue: "US-FL")
+    /// Georgia (`US-GA`).
+    public static let usGA = CountryCodeISO3166_2(rawValue: "US-GA")
+    /// Hawaii (`US-HI`).
+    public static let usHI = CountryCodeISO3166_2(rawValue: "US-HI")
+    /// Iowa (`US-IA`).
+    public static let usIA = CountryCodeISO3166_2(rawValue: "US-IA")
+    /// Idaho (`US-ID`).
+    public static let usID = CountryCodeISO3166_2(rawValue: "US-ID")
+    /// Illinois (`US-IL`).
+    public static let usIL = CountryCodeISO3166_2(rawValue: "US-IL")
+    /// Indiana (`US-IN`).
+    public static let usIN = CountryCodeISO3166_2(rawValue: "US-IN")
+    /// Kansas (`US-KS`).
+    public static let usKS = CountryCodeISO3166_2(rawValue: "US-KS")
+    /// Kentucky (`US-KY`).
+    public static let usKY = CountryCodeISO3166_2(rawValue: "US-KY")
+    /// Louisiana (`US-LA`).
+    public static let usLA = CountryCodeISO3166_2(rawValue: "US-LA")
+    /// Massachusetts (`US-MA`).
+    public static let usMA = CountryCodeISO3166_2(rawValue: "US-MA")
+    /// Maryland (`US-MD`).
+    public static let usMD = CountryCodeISO3166_2(rawValue: "US-MD")
+    /// Maine (`US-ME`).
+    public static let usME = CountryCodeISO3166_2(rawValue: "US-ME")
+    /// Michigan (`US-MI`).
+    public static let usMI = CountryCodeISO3166_2(rawValue: "US-MI")
+    /// Minnesota (`US-MN`).
+    public static let usMN = CountryCodeISO3166_2(rawValue: "US-MN")
+    /// Missouri (`US-MO`).
+    public static let usMO = CountryCodeISO3166_2(rawValue: "US-MO")
+    /// Mississippi (`US-MS`).
+    public static let usMS = CountryCodeISO3166_2(rawValue: "US-MS")
+    /// Montana (`US-MT`).
+    public static let usMT = CountryCodeISO3166_2(rawValue: "US-MT")
+    /// North Carolina (`US-NC`).
+    public static let usNC = CountryCodeISO3166_2(rawValue: "US-NC")
+    /// North Dakota (`US-ND`).
+    public static let usND = CountryCodeISO3166_2(rawValue: "US-ND")
+    /// Nebraska (`US-NE`).
+    public static let usNE = CountryCodeISO3166_2(rawValue: "US-NE")
+    /// New Hampshire (`US-NH`).
+    public static let usNH = CountryCodeISO3166_2(rawValue: "US-NH")
+    /// New Jersey (`US-NJ`).
+    public static let usNJ = CountryCodeISO3166_2(rawValue: "US-NJ")
+    /// New Mexico (`US-NM`).
+    public static let usNM = CountryCodeISO3166_2(rawValue: "US-NM")
+    /// Nevada (`US-NV`).
+    public static let usNV = CountryCodeISO3166_2(rawValue: "US-NV")
+    /// New York (`US-NY`).
+    public static let usNY = CountryCodeISO3166_2(rawValue: "US-NY")
+    /// Ohio (`US-OH`).
+    public static let usOH = CountryCodeISO3166_2(rawValue: "US-OH")
+    /// Oklahoma (`US-OK`).
+    public static let usOK = CountryCodeISO3166_2(rawValue: "US-OK")
+    /// Oregon (`US-OR`).
+    public static let usOR = CountryCodeISO3166_2(rawValue: "US-OR")
+    /// Pennsylvania (`US-PA`).
+    public static let usPA = CountryCodeISO3166_2(rawValue: "US-PA")
+    /// Rhode Island (`US-RI`).
+    public static let usRI = CountryCodeISO3166_2(rawValue: "US-RI")
+    /// South Carolina (`US-SC`).
+    public static let usSC = CountryCodeISO3166_2(rawValue: "US-SC")
+    /// South Dakota (`US-SD`).
+    public static let usSD = CountryCodeISO3166_2(rawValue: "US-SD")
+    /// Tennessee (`US-TN`).
+    public static let usTN = CountryCodeISO3166_2(rawValue: "US-TN")
+    /// Texas (`US-TX`).
+    public static let usTX = CountryCodeISO3166_2(rawValue: "US-TX")
+    /// Utah (`US-UT`).
+    public static let usUT = CountryCodeISO3166_2(rawValue: "US-UT")
+    /// Virginia (`US-VA`).
+    public static let usVA = CountryCodeISO3166_2(rawValue: "US-VA")
+    /// Vermont (`US-VT`).
+    public static let usVT = CountryCodeISO3166_2(rawValue: "US-VT")
+    /// Washington (`US-WA`).
+    public static let usWA = CountryCodeISO3166_2(rawValue: "US-WA")
+    /// Wisconsin (`US-WI`).
+    public static let usWI = CountryCodeISO3166_2(rawValue: "US-WI")
+    /// West Virginia (`US-WV`).
+    public static let usWV = CountryCodeISO3166_2(rawValue: "US-WV")
+    /// Wyoming (`US-WY`).
+    public static let usWY = CountryCodeISO3166_2(rawValue: "US-WY")
+
+    /// All 71 ISO 3166-2 subdivision codes present in GLEIF ELF Code List v1.6.
+    public static let allKnown: [CountryCodeISO3166_2] = [
+        .aeAZ,
+        .aeDU,
+        .aeRK,
+        .beVLG,
+        .caAB,
+        .caBC,
+        .caMB,
+        .caNB,
+        .caNL,
+        .caNS,
+        .caNT,
+        .caON,
+        .caPE,
+        .caQC,
+        .caSK,
+        .gbNIR,
+        .gbSCT,
+        .knN,
+        .my15,
+        .pt30,
+        .usAK,
+        .usAL,
+        .usAR,
+        .usAZ,
+        .usCA,
+        .usCO,
+        .usCT,
+        .usDC,
+        .usDE,
+        .usFL,
+        .usGA,
+        .usHI,
+        .usIA,
+        .usID,
+        .usIL,
+        .usIN,
+        .usKS,
+        .usKY,
+        .usLA,
+        .usMA,
+        .usMD,
+        .usME,
+        .usMI,
+        .usMN,
+        .usMO,
+        .usMS,
+        .usMT,
+        .usNC,
+        .usND,
+        .usNE,
+        .usNH,
+        .usNJ,
+        .usNM,
+        .usNV,
+        .usNY,
+        .usOH,
+        .usOK,
+        .usOR,
+        .usPA,
+        .usRI,
+        .usSC,
+        .usSD,
+        .usTN,
+        .usTX,
+        .usUT,
+        .usVA,
+        .usVT,
+        .usWA,
+        .usWI,
+        .usWV,
+        .usWY,
+    ]
+
+    private static let jurisdictionNames: [CountryCodeISO3166_2: String] = [
+        .aeAZ: "Abu Dhabi",
+        .aeDU: "Dubai",
+        .aeRK: "Ras Al Khaimah",
+        .beVLG: "Flemish Region",
+        .caAB: "Alberta",
+        .caBC: "British Columbia",
+        .caMB: "Manitoba",
+        .caNB: "New Brunswick",
+        .caNL: "Newfoundland and Labrador",
+        .caNS: "Nova Scotia",
+        .caNT: "Northwest Territories",
+        .caON: "Ontario",
+        .caPE: "Prince Edward Island",
+        .caQC: "Quebec",
+        .caSK: "Saskatchewan",
+        .gbNIR: "Northern Ireland",
+        .gbSCT: "Scotland",
+        .knN: "Nevis",
+        .my15: "Labuan",
+        .pt30: "Madeira",
+        .usAK: "Alaska",
+        .usAL: "Alabama",
+        .usAR: "Arkansas",
+        .usAZ: "Arizona",
+        .usCA: "California",
+        .usCO: "Colorado",
+        .usCT: "Connecticut",
+        .usDC: "District of Columbia",
+        .usDE: "Delaware",
+        .usFL: "Florida",
+        .usGA: "Georgia",
+        .usHI: "Hawaii",
+        .usIA: "Iowa",
+        .usID: "Idaho",
+        .usIL: "Illinois",
+        .usIN: "Indiana",
+        .usKS: "Kansas",
+        .usKY: "Kentucky",
+        .usLA: "Louisiana",
+        .usMA: "Massachusetts",
+        .usMD: "Maryland",
+        .usME: "Maine",
+        .usMI: "Michigan",
+        .usMN: "Minnesota",
+        .usMO: "Missouri",
+        .usMS: "Mississippi",
+        .usMT: "Montana",
+        .usNC: "North Carolina",
+        .usND: "North Dakota",
+        .usNE: "Nebraska",
+        .usNH: "New Hampshire",
+        .usNJ: "New Jersey",
+        .usNM: "New Mexico",
+        .usNV: "Nevada",
+        .usNY: "New York",
+        .usOH: "Ohio",
+        .usOK: "Oklahoma",
+        .usOR: "Oregon",
+        .usPA: "Pennsylvania",
+        .usRI: "Rhode Island",
+        .usSC: "South Carolina",
+        .usSD: "South Dakota",
+        .usTN: "Tennessee",
+        .usTX: "Texas",
+        .usUT: "Utah",
+        .usVA: "Virginia",
+        .usVT: "Vermont",
+        .usWA: "Washington",
+        .usWI: "Wisconsin",
+        .usWV: "West Virginia",
+        .usWY: "Wyoming",
+    ]
 }

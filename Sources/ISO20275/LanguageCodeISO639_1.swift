@@ -1,162 +1,236 @@
 import Foundation
 
-/// ISO 639-1 alpha-2 language code used in the ISO 20275 Entity Legal Forms (ELF) Code List.
-public enum LanguageCodeISO639_1: String, CaseIterable, Codable, Hashable, Sendable, CustomStringConvertible {
-    /// Arabic (`ar`).
-    case ar = "ar"
-    /// Azerbaijani (`az`).
-    case az = "az"
-    /// Belarusian (`be`).
-    case be = "be"
-    /// Bulgarian (`bg`).
-    case bg = "bg"
-    /// Czech (`cs`).
-    case cs = "cs"
-    /// Welsh (`cy`).
-    case cy = "cy"
-    /// Danish (`da`).
-    case da = "da"
-    /// German (`de`).
-    case de = "de"
-    /// Greek (`el`).
-    case el = "el"
-    /// English (`en`).
-    case en = "en"
-    /// Spanish (`es`).
-    case es = "es"
-    /// Estonian (`et`).
-    case et = "et"
-    /// Finnish (`fi`).
-    case fi = "fi"
-    /// Faroese (`fo`).
-    case fo = "fo"
-    /// French (`fr`).
-    case fr = "fr"
-    /// Irish (`ga`).
-    case ga = "ga"
-    /// Hebrew (`he`).
-    case he = "he"
-    /// Croatian (`hr`).
-    case hr = "hr"
-    /// Hungarian (`hu`).
-    case hu = "hu"
-    /// Armenian (`hy`).
-    case hy = "hy"
-    /// Indonesian (`id`).
-    case id = "id"
-    /// Icelandic (`is`).
-    case `is` = "is"
-    /// Italian (`it`).
-    case it = "it"
-    /// Japanese (`ja`).
-    case ja = "ja"
-    /// Khmer (`km`).
-    case km = "km"
-    /// Korean (`ko`).
-    case ko = "ko"
-    /// Lithuanian (`lt`).
-    case lt = "lt"
-    /// Latvian (`lv`).
-    case lv = "lv"
-    /// Macedonian (`mk`).
-    case mk = "mk"
-    /// Malay (`ms`).
-    case ms = "ms"
-    /// Maltese (`mt`).
-    case mt = "mt"
-    /// Burmese (`my`).
-    case my = "my"
-    /// Nepali (`ne`).
-    case ne = "ne"
-    /// Dutch (`nl`).
-    case nl = "nl"
-    /// Norwegian (`no`).
-    case no = "no"
-    /// Polish (`pl`).
-    case pl = "pl"
-    /// Portuguese (`pt`).
-    case pt = "pt"
-    /// Romanian (`ro`).
-    case ro = "ro"
-    /// Russian (`ru`).
-    case ru = "ru"
-    /// Slovak (`sk`).
-    case sk = "sk"
-    /// Slovene (`sl`).
-    case sl = "sl"
-    /// Albanian (`sq`).
-    case sq = "sq"
-    /// Serbian (`sr`).
-    case sr = "sr"
-    /// Swedish (`sv`).
-    case sv = "sv"
-    /// Thai (`th`).
-    case th = "th"
-    /// Turkish (`tr`).
-    case tr = "tr"
-    /// Vietnamese (`vi`).
-    case vi = "vi"
-    /// Chinese (`zh`).
-    case zh = "zh"
+/// ISO 639-1 alpha-2 language code.
+///
+/// Modeled as an extensible `RawRepresentable` value type (matching Apple's `Locale.LanguageCode` pattern)
+/// with `static let` constants for known languages.
+public struct LanguageCodeISO639_1: RawRepresentable, Hashable, Codable, Sendable, CustomStringConvertible, ExpressibleByStringLiteral {
+    public let rawValue: String
 
-    /// Case-insensitive initializer from a 2-letter ISO 639-1 code (e.g., `"EN"` or `"en"`).
-    public init?(code: String) {
-        self.init(rawValue: code.trimmingCharacters(in: .whitespacesAndNewlines).lowercased())
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+    }
+
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(rawValue: value)
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.init(rawValue: try container.decode(String.self))
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
     }
 
     public var description: String { rawValue }
 
-    /// Canonical English name for this ISO 639-1 language code (normalizing GLEIF CSV typos such as `"Greece"` or `"Portugese"`).
-    public var englishName: String {
-        switch self {
-        case .ar: return "Arabic"
-        case .az: return "Azerbaijani"
-        case .be: return "Belarusian"
-        case .bg: return "Bulgarian"
-        case .cs: return "Czech"
-        case .cy: return "Welsh"
-        case .da: return "Danish"
-        case .de: return "German"
-        case .el: return "Greek"
-        case .en: return "English"
-        case .es: return "Spanish"
-        case .et: return "Estonian"
-        case .fi: return "Finnish"
-        case .fo: return "Faroese"
-        case .fr: return "French"
-        case .ga: return "Irish"
-        case .he: return "Hebrew"
-        case .hr: return "Croatian"
-        case .hu: return "Hungarian"
-        case .hy: return "Armenian"
-        case .id: return "Indonesian"
-        case .`is`: return "Icelandic"
-        case .it: return "Italian"
-        case .ja: return "Japanese"
-        case .km: return "Khmer"
-        case .ko: return "Korean"
-        case .lt: return "Lithuanian"
-        case .lv: return "Latvian"
-        case .mk: return "Macedonian"
-        case .ms: return "Malay"
-        case .mt: return "Maltese"
-        case .my: return "Burmese"
-        case .ne: return "Nepali"
-        case .nl: return "Dutch"
-        case .no: return "Norwegian"
-        case .pl: return "Polish"
-        case .pt: return "Portuguese"
-        case .ro: return "Romanian"
-        case .ru: return "Russian"
-        case .sk: return "Slovak"
-        case .sl: return "Slovene"
-        case .sq: return "Albanian"
-        case .sr: return "Serbian"
-        case .sv: return "Swedish"
-        case .th: return "Thai"
-        case .tr: return "Turkish"
-        case .vi: return "Vietnamese"
-        case .zh: return "Chinese"
-        }
+    /// Canonical English name for this ISO 639-1 code, if known.
+    public var knownEnglishName: String? {
+        Self.englishNames[self]
     }
+
+    /// Arabic (`ar`).
+    public static let ar = LanguageCodeISO639_1(rawValue: "ar")
+    /// Azerbaijani (`az`).
+    public static let az = LanguageCodeISO639_1(rawValue: "az")
+    /// Belarusian (`be`).
+    public static let be = LanguageCodeISO639_1(rawValue: "be")
+    /// Bulgarian (`bg`).
+    public static let bg = LanguageCodeISO639_1(rawValue: "bg")
+    /// Czech (`cs`).
+    public static let cs = LanguageCodeISO639_1(rawValue: "cs")
+    /// Welsh (`cy`).
+    public static let cy = LanguageCodeISO639_1(rawValue: "cy")
+    /// Danish (`da`).
+    public static let da = LanguageCodeISO639_1(rawValue: "da")
+    /// German (`de`).
+    public static let de = LanguageCodeISO639_1(rawValue: "de")
+    /// Greek (`el`).
+    public static let el = LanguageCodeISO639_1(rawValue: "el")
+    /// English (`en`).
+    public static let en = LanguageCodeISO639_1(rawValue: "en")
+    /// Spanish (`es`).
+    public static let es = LanguageCodeISO639_1(rawValue: "es")
+    /// Estonian (`et`).
+    public static let et = LanguageCodeISO639_1(rawValue: "et")
+    /// Finnish (`fi`).
+    public static let fi = LanguageCodeISO639_1(rawValue: "fi")
+    /// Faroese (`fo`).
+    public static let fo = LanguageCodeISO639_1(rawValue: "fo")
+    /// French (`fr`).
+    public static let fr = LanguageCodeISO639_1(rawValue: "fr")
+    /// Irish (`ga`).
+    public static let ga = LanguageCodeISO639_1(rawValue: "ga")
+    /// Hebrew (`he`).
+    public static let he = LanguageCodeISO639_1(rawValue: "he")
+    /// Croatian (`hr`).
+    public static let hr = LanguageCodeISO639_1(rawValue: "hr")
+    /// Hungarian (`hu`).
+    public static let hu = LanguageCodeISO639_1(rawValue: "hu")
+    /// Armenian (`hy`).
+    public static let hy = LanguageCodeISO639_1(rawValue: "hy")
+    /// Indonesian (`id`).
+    public static let id = LanguageCodeISO639_1(rawValue: "id")
+    /// Icelandic (`is`).
+    public static let `is` = LanguageCodeISO639_1(rawValue: "is")
+    /// Italian (`it`).
+    public static let it = LanguageCodeISO639_1(rawValue: "it")
+    /// Japanese (`ja`).
+    public static let ja = LanguageCodeISO639_1(rawValue: "ja")
+    /// Khmer (`km`).
+    public static let km = LanguageCodeISO639_1(rawValue: "km")
+    /// Korean (`ko`).
+    public static let ko = LanguageCodeISO639_1(rawValue: "ko")
+    /// Lithuanian (`lt`).
+    public static let lt = LanguageCodeISO639_1(rawValue: "lt")
+    /// Latvian (`lv`).
+    public static let lv = LanguageCodeISO639_1(rawValue: "lv")
+    /// Macedonian (`mk`).
+    public static let mk = LanguageCodeISO639_1(rawValue: "mk")
+    /// Malay (`ms`).
+    public static let ms = LanguageCodeISO639_1(rawValue: "ms")
+    /// Maltese (`mt`).
+    public static let mt = LanguageCodeISO639_1(rawValue: "mt")
+    /// Burmese (`my`).
+    public static let my = LanguageCodeISO639_1(rawValue: "my")
+    /// Nepali (`ne`).
+    public static let ne = LanguageCodeISO639_1(rawValue: "ne")
+    /// Dutch (`nl`).
+    public static let nl = LanguageCodeISO639_1(rawValue: "nl")
+    /// Norwegian (`no`).
+    public static let no = LanguageCodeISO639_1(rawValue: "no")
+    /// Polish (`pl`).
+    public static let pl = LanguageCodeISO639_1(rawValue: "pl")
+    /// Portuguese (`pt`).
+    public static let pt = LanguageCodeISO639_1(rawValue: "pt")
+    /// Romanian (`ro`).
+    public static let ro = LanguageCodeISO639_1(rawValue: "ro")
+    /// Russian (`ru`).
+    public static let ru = LanguageCodeISO639_1(rawValue: "ru")
+    /// Slovak (`sk`).
+    public static let sk = LanguageCodeISO639_1(rawValue: "sk")
+    /// Slovene (`sl`).
+    public static let sl = LanguageCodeISO639_1(rawValue: "sl")
+    /// Albanian (`sq`).
+    public static let sq = LanguageCodeISO639_1(rawValue: "sq")
+    /// Serbian (`sr`).
+    public static let sr = LanguageCodeISO639_1(rawValue: "sr")
+    /// Swedish (`sv`).
+    public static let sv = LanguageCodeISO639_1(rawValue: "sv")
+    /// Thai (`th`).
+    public static let th = LanguageCodeISO639_1(rawValue: "th")
+    /// Turkish (`tr`).
+    public static let tr = LanguageCodeISO639_1(rawValue: "tr")
+    /// Vietnamese (`vi`).
+    public static let vi = LanguageCodeISO639_1(rawValue: "vi")
+    /// Chinese (`zh`).
+    public static let zh = LanguageCodeISO639_1(rawValue: "zh")
+
+    /// All 48 ISO 639-1 language codes present in GLEIF ELF Code List v1.6.
+    public static let allKnown: [LanguageCodeISO639_1] = [
+        .ar,
+        .az,
+        .be,
+        .bg,
+        .cs,
+        .cy,
+        .da,
+        .de,
+        .el,
+        .en,
+        .es,
+        .et,
+        .fi,
+        .fo,
+        .fr,
+        .ga,
+        .he,
+        .hr,
+        .hu,
+        .hy,
+        .id,
+        .`is`,
+        .it,
+        .ja,
+        .km,
+        .ko,
+        .lt,
+        .lv,
+        .mk,
+        .ms,
+        .mt,
+        .my,
+        .ne,
+        .nl,
+        .no,
+        .pl,
+        .pt,
+        .ro,
+        .ru,
+        .sk,
+        .sl,
+        .sq,
+        .sr,
+        .sv,
+        .th,
+        .tr,
+        .vi,
+        .zh,
+    ]
+
+    private static let englishNames: [LanguageCodeISO639_1: String] = [
+        .ar: "Arabic",
+        .az: "Azerbaijani",
+        .be: "Belarusian",
+        .bg: "Bulgarian",
+        .cs: "Czech",
+        .cy: "Welsh",
+        .da: "Danish",
+        .de: "German",
+        .el: "Greek",
+        .en: "English",
+        .es: "Spanish",
+        .et: "Estonian",
+        .fi: "Finnish",
+        .fo: "Faroese",
+        .fr: "French",
+        .ga: "Irish",
+        .he: "Hebrew",
+        .hr: "Croatian",
+        .hu: "Hungarian",
+        .hy: "Armenian",
+        .id: "Indonesian",
+        .`is`: "Icelandic",
+        .it: "Italian",
+        .ja: "Japanese",
+        .km: "Khmer",
+        .ko: "Korean",
+        .lt: "Lithuanian",
+        .lv: "Latvian",
+        .mk: "Macedonian",
+        .ms: "Malay",
+        .mt: "Maltese",
+        .my: "Burmese",
+        .ne: "Nepali",
+        .nl: "Dutch",
+        .no: "Norwegian",
+        .pl: "Polish",
+        .pt: "Portuguese",
+        .ro: "Romanian",
+        .ru: "Russian",
+        .sk: "Slovak",
+        .sl: "Slovene",
+        .sq: "Albanian",
+        .sr: "Serbian",
+        .sv: "Swedish",
+        .th: "Thai",
+        .tr: "Turkish",
+        .vi: "Vietnamese",
+        .zh: "Chinese",
+    ]
 }

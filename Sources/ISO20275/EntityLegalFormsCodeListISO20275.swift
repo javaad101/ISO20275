@@ -139,7 +139,7 @@ extension EntityLegalFormsCodeListISO20275 {
         case reason = "Reason"
     }
 
-    /// Loads all 4,002 entries from the GLEIF v1.6 CSV resource bundled with the `ISO20275` package.
+    /// Loads all entries from the GLEIF v1.6 CSV resource bundled with the `ISO20275` package.
     public static func bundled() throws -> [EntityLegalFormsCodeListISO20275] {
         guard let url = Bundle.module.url(
             forResource: "2026-02-19-elf-code-list-v1.6",
@@ -150,7 +150,7 @@ extension EntityLegalFormsCodeListISO20275 {
         return try load(from: url)
     }
 
-    /// Loads ISO 20275 ELF entries from a CSV file URL.
+    /// Loads ISO 20275 ELF entries from any GLEIF-compatible CSV file URL, including future releases.
     public static func load(from url: URL) throws -> [EntityLegalFormsCodeListISO20275] {
         let data = try Data(contentsOf: url)
         return try load(csvData: data)
@@ -207,11 +207,10 @@ extension EntityLegalFormsCodeListISO20275 {
         entries.reserveCapacity(max(0, rows.count - 1))
 
         for (offset, row) in rows.dropFirst().enumerated() {
-            // Skip trailing completely blank line if present
             if row.count == 1 && row[0].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 continue
             }
-            let rowNumber = offset + 2 // 1-based CSV row index including header
+            let rowNumber = offset + 2
             guard row.count == expectedCount else {
                 throw ISO20275Error.malformedRowColumnCount(
                     row: rowNumber,
@@ -228,57 +227,6 @@ extension EntityLegalFormsCodeListISO20275 {
             guard let rawCode = trimmed(iCode) else {
                 throw ISO20275Error.missingRequiredValue(row: rowNumber, column: CSVColumn.elfCode.rawValue)
             }
-            guard let code = ELFCode(code: rawCode) else {
-                throw ISO20275Error.unrecognizedCode(
-                    row: rowNumber,
-                    column: CSVColumn.elfCode.rawValue,
-                    value: rawCode
-                )
-            }
-
-            let country: Country? = try trimmed(iCountry).map { raw in
-                guard let value = Country(rawValue: raw) else {
-                    throw ISO20275Error.unrecognizedCode(
-                        row: rowNumber,
-                        column: CSVColumn.countryOfFormation.rawValue,
-                        value: raw
-                    )
-                }
-                return value
-            }
-
-            let countryCode: CountryCodeISO3166_1? = try trimmed(iCountryCode).map { raw in
-                guard let value = CountryCodeISO3166_1(code: raw) else {
-                    throw ISO20275Error.unrecognizedCode(
-                        row: rowNumber,
-                        column: CSVColumn.countryCode.rawValue,
-                        value: raw
-                    )
-                }
-                return value
-            }
-
-            let subdivisionCode: CountryCodeISO3166_2? = try trimmed(iSubdiv).map { raw in
-                guard let value = CountryCodeISO3166_2(code: raw) else {
-                    throw ISO20275Error.unrecognizedCode(
-                        row: rowNumber,
-                        column: CSVColumn.countrySubdivisionCode.rawValue,
-                        value: raw
-                    )
-                }
-                return value
-            }
-
-            let languageCode: LanguageCodeISO639_1? = try trimmed(iLanguageCode).map { raw in
-                guard let value = LanguageCodeISO639_1(code: raw) else {
-                    throw ISO20275Error.unrecognizedCode(
-                        row: rowNumber,
-                        column: CSVColumn.languageCode.rawValue,
-                        value: raw
-                    )
-                }
-                return value
-            }
 
             guard let rawCreated = trimmed(iDateCreated) else {
                 throw ISO20275Error.missingRequiredValue(row: rowNumber, column: CSVColumn.dateCreated.rawValue)
@@ -294,13 +242,6 @@ extension EntityLegalFormsCodeListISO20275 {
             guard let rawStatus = trimmed(iStatus) else {
                 throw ISO20275Error.missingRequiredValue(row: rowNumber, column: CSVColumn.status.rawValue)
             }
-            guard let status = ELFStatus(rawValue: rawStatus.uppercased()) else {
-                throw ISO20275Error.unrecognizedCode(
-                    row: rowNumber,
-                    column: CSVColumn.status.rawValue,
-                    value: rawStatus
-                )
-            }
 
             let modificationDate: Date? = try trimmed(iModificationDate).map { raw in
                 guard let parsed = ISO8601CalendarDate.parse(raw) else {
@@ -315,19 +256,19 @@ extension EntityLegalFormsCodeListISO20275 {
 
             entries.append(
                 EntityLegalFormsCodeListISO20275(
-                    code: code,
-                    countryOfFormation: country,
-                    countryCodeISO3166_1: countryCode,
+                    code: ELFCode(rawValue: rawCode),
+                    countryOfFormation: trimmed(iCountry).map(Country.init(rawValue:)),
+                    countryCodeISO3166_1: trimmed(iCountryCode).map(CountryCodeISO3166_1.init(rawValue:)),
                     jurisdictionOfFormation: trimmed(iJurisdiction),
-                    countrySubdivisionCode: subdivisionCode,
+                    countrySubdivisionCode: trimmed(iSubdiv).map(CountryCodeISO3166_2.init(rawValue:)),
                     entityLegalFormLocalName: trimmed(iLocalName),
                     language: trimmed(iLanguage),
-                    languageCode: languageCode,
+                    languageCode: trimmed(iLanguageCode).map(LanguageCodeISO639_1.init(rawValue:)),
                     entityLegalFormTransliteratedName: trimmed(iTranslitName),
                     abbreviationsLocalLanguage: trimmed(iAbbrLocal),
                     abbreviationsTransliterated: trimmed(iAbbrTranslit),
                     dateCreated: dateCreated,
-                    status: status,
+                    status: ELFStatus(rawValue: rawStatus),
                     modification: trimmed(iModification),
                     modificationDate: modificationDate,
                     reason: trimmed(iReason)

@@ -1,400 +1,554 @@
 import Foundation
 
 /// Country or territory of formation in the ISO 20275 Entity Legal Forms (ELF) Code List.
-public enum Country: String, CaseIterable, Codable, Hashable, Sendable, CustomStringConvertible {
-    /// Antigua and Barbuda (`AG`).
-    case antiguaAndBarbuda = "Antigua and Barbuda"
-    /// Argentina (`AR`).
-    case argentina = "Argentina"
-    /// Armenia (`AM`).
-    case armenia = "Armenia"
-    /// Aruba (`AW`).
-    case aruba = "Aruba"
-    /// Australia (`AU`).
-    case australia = "Australia"
-    /// Austria (`AT`).
-    case austria = "Austria"
-    /// Azerbaijan (`AZ`).
-    case azerbaijan = "Azerbaijan"
-    /// Bahamas (`BS`).
-    case bahamas = "Bahamas"
-    /// Bahrain (`BH`).
-    case bahrain = "Bahrain"
-    /// Barbados (`BB`).
-    case barbados = "Barbados"
-    /// Belarus (`BY`).
-    case belarus = "Belarus"
-    /// Belgium (`BE`).
-    case belgium = "Belgium"
-    /// Belize (`BZ`).
-    case belize = "Belize"
-    /// Benin (`BJ`).
-    case benin = "Benin"
-    /// Bermuda (`BM`).
-    case bermuda = "Bermuda"
-    /// Bolivia (Plurinational State of) (`BO`).
-    case bolivia = "Bolivia (Plurinational State of)"
-    /// Bonaire, Sint Eustatius and Saba (`BQ`).
-    case bonaireSintEustatiusAndSaba = "Bonaire, Sint Eustatius and Saba"
-    /// Botswana (`BW`).
-    case botswana = "Botswana"
-    /// Brazil (`BR`).
-    case brazil = "Brazil"
-    /// Brunei Darussalam (`BN`).
-    case bruneiDarussalam = "Brunei Darussalam"
-    /// Bulgaria (`BG`).
-    case bulgaria = "Bulgaria"
-    /// Cambodia (`KH`).
-    case cambodia = "Cambodia"
-    /// Canada (`CA`).
-    case canada = "Canada"
-    /// Cayman Islands (`KY`).
-    case caymanIslands = "Cayman Islands"
-    /// Chile (`CL`).
-    case chile = "Chile"
-    /// China (`CN`).
-    case china = "China"
-    /// Colombia (`CO`).
-    case colombia = "Colombia"
-    /// Cook Islands (`CK`).
-    case cookIslands = "Cook Islands"
-    /// Costa Rica (`CR`).
-    case costaRica = "Costa Rica"
-    /// Croatia (`HR`).
-    case croatia = "Croatia"
-    /// Curaçao (`CW`).
-    case curacao = "Curaçao"
-    /// Cyprus (`CY`).
-    case cyprus = "Cyprus"
-    /// Czechia (`CZ`).
-    case czechia = "Czechia"
-    /// Denmark (`DK`).
-    case denmark = "Denmark"
-    /// Dominican Republic (`DO`).
-    case dominicanRepublic = "Dominican Republic"
-    /// Ecuador (`EC`).
-    case ecuador = "Ecuador"
-    /// Estonia (`EE`).
-    case estonia = "Estonia"
-    /// Faroe Islands (`FO`).
-    case faroeIslands = "Faroe Islands"
-    /// Fiji (`FJ`).
-    case fiji = "Fiji"
-    /// Finland (`FI`).
-    case finland = "Finland"
-    /// France (`FR`).
-    case france = "France"
-    /// Germany (`DE`).
-    case germany = "Germany"
-    /// Ghana (`GH`).
-    case ghana = "Ghana"
-    /// Gibraltar (`GI`).
-    case gibraltar = "Gibraltar"
-    /// Greece (`GR`).
-    case greece = "Greece"
-    /// Guam (`GU`).
-    case guam = "Guam"
-    /// Guatemala (`GT`).
-    case guatemala = "Guatemala"
-    /// Guernsey (`GG`).
-    case guernsey = "Guernsey"
-    /// Honduras (`HN`).
-    case honduras = "Honduras"
-    /// Hong Kong (`HK`).
-    case hongKong = "Hong Kong"
-    /// Hungary (`HU`).
-    case hungary = "Hungary"
-    /// Iceland (`IS`).
-    case iceland = "Iceland"
-    /// India (`IN`).
-    case india = "India"
-    /// Indonesia (`ID`).
-    case indonesia = "Indonesia"
-    /// Ireland (`IE`).
-    case ireland = "Ireland"
-    /// Isle of Man (`IM`).
-    case isleOfMan = "Isle of Man"
-    /// Israel (`IL`).
-    case israel = "Israel"
-    /// Italy (`IT`).
-    case italy = "Italy"
-    /// Jamaica (`JM`).
-    case jamaica = "Jamaica"
-    /// Japan (`JP`).
-    case japan = "Japan"
-    /// Jersey (`JE`).
-    case jersey = "Jersey"
-    /// Jordan (`JO`).
-    case jordan = "Jordan"
-    /// Korea (Republic of) (`KR`).
-    case koreaRepublicOf = "Korea (Republic of)"
-    /// Kosovo (`XK`).
-    case kosovo = "Kosovo"
-    /// Kuwait (`KW`).
-    case kuwait = "Kuwait"
-    /// Latvia (`LV`).
-    case latvia = "Latvia"
-    /// Lesotho (`LS`).
-    case lesotho = "Lesotho"
-    /// Liechtenstein (`LI`).
-    case liechtenstein = "Liechtenstein"
-    /// Lithuania (`LT`).
-    case lithuania = "Lithuania"
-    /// Luxembourg (`LU`).
-    case luxembourg = "Luxembourg"
-    /// Malaysia (`MY`).
-    case malaysia = "Malaysia"
-    /// Malta (`MT`).
-    case malta = "Malta"
-    /// Marshall Islands (`MH`).
-    case marshallIslands = "Marshall Islands"
-    /// Mauritius (`MU`).
-    case mauritius = "Mauritius"
-    /// Mexico (`MX`).
-    case mexico = "Mexico"
-    /// Monaco (`MC`).
-    case monaco = "Monaco"
-    /// Myanmar (`MM`).
-    case myanmar = "Myanmar"
-    /// Nepal (`NP`).
-    case nepal = "Nepal"
-    /// Netherlands (`NL`).
-    case netherlands = "Netherlands"
-    /// New Zealand (`NZ`).
-    case newZealand = "New Zealand"
-    /// Niger (`NE`).
-    case niger = "Niger"
-    /// Nigeria (`NG`).
-    case nigeria = "Nigeria"
-    /// North Macedonia (`MK`).
-    case northMacedonia = "North Macedonia"
-    /// Norway (`NO`).
-    case norway = "Norway"
-    /// Oman (`OM`).
-    case oman = "Oman"
-    /// Pakistan (`PK`).
-    case pakistan = "Pakistan"
-    /// Panama (`PA`).
-    case panama = "Panama"
-    /// Papua New Guinea (`PG`).
-    case papuaNewGuinea = "Papua New Guinea"
-    /// Paraguay (`PY`).
-    case paraguay = "Paraguay"
-    /// Peru (`PE`).
-    case peru = "Peru"
-    /// Philippines (`PH`).
-    case philippines = "Philippines"
-    /// Poland (`PL`).
-    case poland = "Poland"
-    /// Portugal (`PT`).
-    case portugal = "Portugal"
-    /// Puerto Rico (`PR`).
-    case puertoRico = "Puerto Rico"
-    /// Qatar (`QA`).
-    case qatar = "Qatar"
-    /// Romania (`RO`).
-    case romania = "Romania"
-    /// Russian Federation (`RU`).
-    case russianFederation = "Russian Federation"
-    /// Saint Kitts and Nevis (`KN`).
-    case saintKittsAndNevis = "Saint Kitts and Nevis"
-    /// Saint Vincent and the Grenadines (`VC`).
-    case saintVincentAndTheGrenadines = "Saint Vincent and the Grenadines"
-    /// Samoa (`WS`).
-    case samoa = "Samoa"
-    /// San Marino (`SM`).
-    case sanMarino = "San Marino"
-    /// Saudi Arabia (`SA`).
-    case saudiArabia = "Saudi Arabia"
-    /// Serbia (`RS`).
-    case serbia = "Serbia"
-    /// Seychelles (`SC`).
-    case seychelles = "Seychelles"
-    /// Singapore (`SG`).
-    case singapore = "Singapore"
-    /// Sint Maarten (`SX`).
-    case sintMaarten = "Sint Maarten"
-    /// Slovakia (`SK`).
-    case slovakia = "Slovakia"
-    /// Slovenia (`SI`).
-    case slovenia = "Slovenia"
-    /// Solomon Islands (`SB`).
-    case solomonIslands = "Solomon Islands"
-    /// South Africa (`ZA`).
-    case southAfrica = "South Africa"
-    /// Spain (`ES`).
-    case spain = "Spain"
-    /// Suriname (`SR`).
-    case suriname = "Suriname"
-    /// Sweden (`SE`).
-    case sweden = "Sweden"
-    /// Switzerland (`CH`).
-    case switzerland = "Switzerland"
-    /// Taiwan (Province of China) (`TW`).
-    case taiwan = "Taiwan (Province of China)"
-    /// Tanzania (`TZ`).
-    case tanzania = "Tanzania"
-    /// Thailand (`TH`).
-    case thailand = "Thailand"
-    /// Tonga (`TO`).
-    case tonga = "Tonga"
-    /// Tunisia (`TN`).
-    case tunisia = "Tunisia"
-    /// Türkiye (`TR`).
-    case turkiye = "Türkiye"
-    /// Tuvalu (`TV`).
-    case tuvalu = "Tuvalu"
-    /// United Arab Emirates (`AE`).
-    case unitedArabEmirates = "United Arab Emirates"
-    /// United Kingdom of Great Britain and Northern Ireland (`GB`).
-    case unitedKingdom = "United Kingdom of Great Britain and Northern Ireland"
-    /// United States of America (`US`).
-    case unitedStatesOfAmerica = "United States of America"
-    /// Uruguay (`UY`).
-    case uruguay = "Uruguay"
-    /// Vanuatu (`VU`).
-    case vanuatu = "Vanuatu"
-    /// Viet Nam (`VN`).
-    case vietNam = "Viet Nam"
-    /// Virgin Islands (British) (`VG`).
-    case virginIslandsBritish = "Virgin Islands (British)"
-    /// Virgin Islands (U.S.) (`VI`).
-    case virginIslandsUS = "Virgin Islands (U.S.)"
+///
+/// Modeled as an extensible `RawRepresentable` value type with `static let` constants so newly
+/// added countries in future GLEIF releases load without breaking source or binary compatibility.
+public struct Country: RawRepresentable, Hashable, Codable, Sendable, CustomStringConvertible {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.init(rawValue: try container.decode(String.self))
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
+    }
 
     public var description: String { rawValue }
 
-    /// Corresponding ISO 3166-1 alpha-2 country code.
-    public var iso3166_1Code: CountryCodeISO3166_1 {
-        switch self {
-        case .antiguaAndBarbuda: return .ag
-        case .argentina: return .ar
-        case .armenia: return .am
-        case .aruba: return .aw
-        case .australia: return .au
-        case .austria: return .at
-        case .azerbaijan: return .az
-        case .bahamas: return .bs
-        case .bahrain: return .bh
-        case .barbados: return .bb
-        case .belarus: return .by
-        case .belgium: return .be
-        case .belize: return .bz
-        case .benin: return .bj
-        case .bermuda: return .bm
-        case .bolivia: return .bo
-        case .bonaireSintEustatiusAndSaba: return .bq
-        case .botswana: return .bw
-        case .brazil: return .br
-        case .bruneiDarussalam: return .bn
-        case .bulgaria: return .bg
-        case .cambodia: return .kh
-        case .canada: return .ca
-        case .caymanIslands: return .ky
-        case .chile: return .cl
-        case .china: return .cn
-        case .colombia: return .co
-        case .cookIslands: return .ck
-        case .costaRica: return .cr
-        case .croatia: return .hr
-        case .curacao: return .cw
-        case .cyprus: return .cy
-        case .czechia: return .cz
-        case .denmark: return .dk
-        case .dominicanRepublic: return .`do`
-        case .ecuador: return .ec
-        case .estonia: return .ee
-        case .faroeIslands: return .fo
-        case .fiji: return .fj
-        case .finland: return .fi
-        case .france: return .fr
-        case .germany: return .de
-        case .ghana: return .gh
-        case .gibraltar: return .gi
-        case .greece: return .gr
-        case .guam: return .gu
-        case .guatemala: return .gt
-        case .guernsey: return .gg
-        case .honduras: return .hn
-        case .hongKong: return .hk
-        case .hungary: return .hu
-        case .iceland: return .`is`
-        case .india: return .`in`
-        case .indonesia: return .id
-        case .ireland: return .ie
-        case .isleOfMan: return .im
-        case .israel: return .il
-        case .italy: return .it
-        case .jamaica: return .jm
-        case .japan: return .jp
-        case .jersey: return .je
-        case .jordan: return .jo
-        case .koreaRepublicOf: return .kr
-        case .kosovo: return .xk
-        case .kuwait: return .kw
-        case .latvia: return .lv
-        case .lesotho: return .ls
-        case .liechtenstein: return .li
-        case .lithuania: return .lt
-        case .luxembourg: return .lu
-        case .malaysia: return .my
-        case .malta: return .mt
-        case .marshallIslands: return .mh
-        case .mauritius: return .mu
-        case .mexico: return .mx
-        case .monaco: return .mc
-        case .myanmar: return .mm
-        case .nepal: return .np
-        case .netherlands: return .nl
-        case .newZealand: return .nz
-        case .niger: return .ne
-        case .nigeria: return .ng
-        case .northMacedonia: return .mk
-        case .norway: return .no
-        case .oman: return .om
-        case .pakistan: return .pk
-        case .panama: return .pa
-        case .papuaNewGuinea: return .pg
-        case .paraguay: return .py
-        case .peru: return .pe
-        case .philippines: return .ph
-        case .poland: return .pl
-        case .portugal: return .pt
-        case .puertoRico: return .pr
-        case .qatar: return .qa
-        case .romania: return .ro
-        case .russianFederation: return .ru
-        case .saintKittsAndNevis: return .kn
-        case .saintVincentAndTheGrenadines: return .vc
-        case .samoa: return .ws
-        case .sanMarino: return .sm
-        case .saudiArabia: return .sa
-        case .serbia: return .rs
-        case .seychelles: return .sc
-        case .singapore: return .sg
-        case .sintMaarten: return .sx
-        case .slovakia: return .sk
-        case .slovenia: return .si
-        case .solomonIslands: return .sb
-        case .southAfrica: return .za
-        case .spain: return .es
-        case .suriname: return .sr
-        case .sweden: return .se
-        case .switzerland: return .ch
-        case .taiwan: return .tw
-        case .tanzania: return .tz
-        case .thailand: return .th
-        case .tonga: return .to
-        case .tunisia: return .tn
-        case .turkiye: return .tr
-        case .tuvalu: return .tv
-        case .unitedArabEmirates: return .ae
-        case .unitedKingdom: return .gb
-        case .unitedStatesOfAmerica: return .us
-        case .uruguay: return .uy
-        case .vanuatu: return .vu
-        case .vietNam: return .vn
-        case .virginIslandsBritish: return .vg
-        case .virginIslandsUS: return .vi
-        }
+    /// Known ISO 3166-1 alpha-2 country code for this country, if defined in the known registry.
+    public var knownISO3166_1Code: CountryCodeISO3166_1? {
+        Self.toCode[self]
     }
+
+    /// Antigua and Barbuda (`AG`).
+    public static let antiguaAndBarbuda = Country(rawValue: "Antigua and Barbuda")
+    /// Argentina (`AR`).
+    public static let argentina = Country(rawValue: "Argentina")
+    /// Armenia (`AM`).
+    public static let armenia = Country(rawValue: "Armenia")
+    /// Aruba (`AW`).
+    public static let aruba = Country(rawValue: "Aruba")
+    /// Australia (`AU`).
+    public static let australia = Country(rawValue: "Australia")
+    /// Austria (`AT`).
+    public static let austria = Country(rawValue: "Austria")
+    /// Azerbaijan (`AZ`).
+    public static let azerbaijan = Country(rawValue: "Azerbaijan")
+    /// Bahamas (`BS`).
+    public static let bahamas = Country(rawValue: "Bahamas")
+    /// Bahrain (`BH`).
+    public static let bahrain = Country(rawValue: "Bahrain")
+    /// Barbados (`BB`).
+    public static let barbados = Country(rawValue: "Barbados")
+    /// Belarus (`BY`).
+    public static let belarus = Country(rawValue: "Belarus")
+    /// Belgium (`BE`).
+    public static let belgium = Country(rawValue: "Belgium")
+    /// Belize (`BZ`).
+    public static let belize = Country(rawValue: "Belize")
+    /// Benin (`BJ`).
+    public static let benin = Country(rawValue: "Benin")
+    /// Bermuda (`BM`).
+    public static let bermuda = Country(rawValue: "Bermuda")
+    /// Bolivia (Plurinational State of) (`BO`).
+    public static let bolivia = Country(rawValue: "Bolivia (Plurinational State of)")
+    /// Bonaire, Sint Eustatius and Saba (`BQ`).
+    public static let bonaireSintEustatiusAndSaba = Country(rawValue: "Bonaire, Sint Eustatius and Saba")
+    /// Botswana (`BW`).
+    public static let botswana = Country(rawValue: "Botswana")
+    /// Brazil (`BR`).
+    public static let brazil = Country(rawValue: "Brazil")
+    /// Brunei Darussalam (`BN`).
+    public static let bruneiDarussalam = Country(rawValue: "Brunei Darussalam")
+    /// Bulgaria (`BG`).
+    public static let bulgaria = Country(rawValue: "Bulgaria")
+    /// Cambodia (`KH`).
+    public static let cambodia = Country(rawValue: "Cambodia")
+    /// Canada (`CA`).
+    public static let canada = Country(rawValue: "Canada")
+    /// Cayman Islands (`KY`).
+    public static let caymanIslands = Country(rawValue: "Cayman Islands")
+    /// Chile (`CL`).
+    public static let chile = Country(rawValue: "Chile")
+    /// China (`CN`).
+    public static let china = Country(rawValue: "China")
+    /// Colombia (`CO`).
+    public static let colombia = Country(rawValue: "Colombia")
+    /// Cook Islands (`CK`).
+    public static let cookIslands = Country(rawValue: "Cook Islands")
+    /// Costa Rica (`CR`).
+    public static let costaRica = Country(rawValue: "Costa Rica")
+    /// Croatia (`HR`).
+    public static let croatia = Country(rawValue: "Croatia")
+    /// Curaçao (`CW`).
+    public static let curacao = Country(rawValue: "Curaçao")
+    /// Cyprus (`CY`).
+    public static let cyprus = Country(rawValue: "Cyprus")
+    /// Czechia (`CZ`).
+    public static let czechia = Country(rawValue: "Czechia")
+    /// Denmark (`DK`).
+    public static let denmark = Country(rawValue: "Denmark")
+    /// Dominican Republic (`DO`).
+    public static let dominicanRepublic = Country(rawValue: "Dominican Republic")
+    /// Ecuador (`EC`).
+    public static let ecuador = Country(rawValue: "Ecuador")
+    /// Estonia (`EE`).
+    public static let estonia = Country(rawValue: "Estonia")
+    /// Faroe Islands (`FO`).
+    public static let faroeIslands = Country(rawValue: "Faroe Islands")
+    /// Fiji (`FJ`).
+    public static let fiji = Country(rawValue: "Fiji")
+    /// Finland (`FI`).
+    public static let finland = Country(rawValue: "Finland")
+    /// France (`FR`).
+    public static let france = Country(rawValue: "France")
+    /// Germany (`DE`).
+    public static let germany = Country(rawValue: "Germany")
+    /// Ghana (`GH`).
+    public static let ghana = Country(rawValue: "Ghana")
+    /// Gibraltar (`GI`).
+    public static let gibraltar = Country(rawValue: "Gibraltar")
+    /// Greece (`GR`).
+    public static let greece = Country(rawValue: "Greece")
+    /// Guam (`GU`).
+    public static let guam = Country(rawValue: "Guam")
+    /// Guatemala (`GT`).
+    public static let guatemala = Country(rawValue: "Guatemala")
+    /// Guernsey (`GG`).
+    public static let guernsey = Country(rawValue: "Guernsey")
+    /// Honduras (`HN`).
+    public static let honduras = Country(rawValue: "Honduras")
+    /// Hong Kong (`HK`).
+    public static let hongKong = Country(rawValue: "Hong Kong")
+    /// Hungary (`HU`).
+    public static let hungary = Country(rawValue: "Hungary")
+    /// Iceland (`IS`).
+    public static let iceland = Country(rawValue: "Iceland")
+    /// India (`IN`).
+    public static let india = Country(rawValue: "India")
+    /// Indonesia (`ID`).
+    public static let indonesia = Country(rawValue: "Indonesia")
+    /// Ireland (`IE`).
+    public static let ireland = Country(rawValue: "Ireland")
+    /// Isle of Man (`IM`).
+    public static let isleOfMan = Country(rawValue: "Isle of Man")
+    /// Israel (`IL`).
+    public static let israel = Country(rawValue: "Israel")
+    /// Italy (`IT`).
+    public static let italy = Country(rawValue: "Italy")
+    /// Jamaica (`JM`).
+    public static let jamaica = Country(rawValue: "Jamaica")
+    /// Japan (`JP`).
+    public static let japan = Country(rawValue: "Japan")
+    /// Jersey (`JE`).
+    public static let jersey = Country(rawValue: "Jersey")
+    /// Jordan (`JO`).
+    public static let jordan = Country(rawValue: "Jordan")
+    /// Korea (Republic of) (`KR`).
+    public static let koreaRepublicOf = Country(rawValue: "Korea (Republic of)")
+    /// Kosovo (`XK`).
+    public static let kosovo = Country(rawValue: "Kosovo")
+    /// Kuwait (`KW`).
+    public static let kuwait = Country(rawValue: "Kuwait")
+    /// Latvia (`LV`).
+    public static let latvia = Country(rawValue: "Latvia")
+    /// Lesotho (`LS`).
+    public static let lesotho = Country(rawValue: "Lesotho")
+    /// Liechtenstein (`LI`).
+    public static let liechtenstein = Country(rawValue: "Liechtenstein")
+    /// Lithuania (`LT`).
+    public static let lithuania = Country(rawValue: "Lithuania")
+    /// Luxembourg (`LU`).
+    public static let luxembourg = Country(rawValue: "Luxembourg")
+    /// Malaysia (`MY`).
+    public static let malaysia = Country(rawValue: "Malaysia")
+    /// Malta (`MT`).
+    public static let malta = Country(rawValue: "Malta")
+    /// Marshall Islands (`MH`).
+    public static let marshallIslands = Country(rawValue: "Marshall Islands")
+    /// Mauritius (`MU`).
+    public static let mauritius = Country(rawValue: "Mauritius")
+    /// Mexico (`MX`).
+    public static let mexico = Country(rawValue: "Mexico")
+    /// Monaco (`MC`).
+    public static let monaco = Country(rawValue: "Monaco")
+    /// Myanmar (`MM`).
+    public static let myanmar = Country(rawValue: "Myanmar")
+    /// Nepal (`NP`).
+    public static let nepal = Country(rawValue: "Nepal")
+    /// Netherlands (`NL`).
+    public static let netherlands = Country(rawValue: "Netherlands")
+    /// New Zealand (`NZ`).
+    public static let newZealand = Country(rawValue: "New Zealand")
+    /// Niger (`NE`).
+    public static let niger = Country(rawValue: "Niger")
+    /// Nigeria (`NG`).
+    public static let nigeria = Country(rawValue: "Nigeria")
+    /// North Macedonia (`MK`).
+    public static let northMacedonia = Country(rawValue: "North Macedonia")
+    /// Norway (`NO`).
+    public static let norway = Country(rawValue: "Norway")
+    /// Oman (`OM`).
+    public static let oman = Country(rawValue: "Oman")
+    /// Pakistan (`PK`).
+    public static let pakistan = Country(rawValue: "Pakistan")
+    /// Panama (`PA`).
+    public static let panama = Country(rawValue: "Panama")
+    /// Papua New Guinea (`PG`).
+    public static let papuaNewGuinea = Country(rawValue: "Papua New Guinea")
+    /// Paraguay (`PY`).
+    public static let paraguay = Country(rawValue: "Paraguay")
+    /// Peru (`PE`).
+    public static let peru = Country(rawValue: "Peru")
+    /// Philippines (`PH`).
+    public static let philippines = Country(rawValue: "Philippines")
+    /// Poland (`PL`).
+    public static let poland = Country(rawValue: "Poland")
+    /// Portugal (`PT`).
+    public static let portugal = Country(rawValue: "Portugal")
+    /// Puerto Rico (`PR`).
+    public static let puertoRico = Country(rawValue: "Puerto Rico")
+    /// Qatar (`QA`).
+    public static let qatar = Country(rawValue: "Qatar")
+    /// Romania (`RO`).
+    public static let romania = Country(rawValue: "Romania")
+    /// Russian Federation (`RU`).
+    public static let russianFederation = Country(rawValue: "Russian Federation")
+    /// Saint Kitts and Nevis (`KN`).
+    public static let saintKittsAndNevis = Country(rawValue: "Saint Kitts and Nevis")
+    /// Saint Vincent and the Grenadines (`VC`).
+    public static let saintVincentAndTheGrenadines = Country(rawValue: "Saint Vincent and the Grenadines")
+    /// Samoa (`WS`).
+    public static let samoa = Country(rawValue: "Samoa")
+    /// San Marino (`SM`).
+    public static let sanMarino = Country(rawValue: "San Marino")
+    /// Saudi Arabia (`SA`).
+    public static let saudiArabia = Country(rawValue: "Saudi Arabia")
+    /// Serbia (`RS`).
+    public static let serbia = Country(rawValue: "Serbia")
+    /// Seychelles (`SC`).
+    public static let seychelles = Country(rawValue: "Seychelles")
+    /// Singapore (`SG`).
+    public static let singapore = Country(rawValue: "Singapore")
+    /// Sint Maarten (`SX`).
+    public static let sintMaarten = Country(rawValue: "Sint Maarten")
+    /// Slovakia (`SK`).
+    public static let slovakia = Country(rawValue: "Slovakia")
+    /// Slovenia (`SI`).
+    public static let slovenia = Country(rawValue: "Slovenia")
+    /// Solomon Islands (`SB`).
+    public static let solomonIslands = Country(rawValue: "Solomon Islands")
+    /// South Africa (`ZA`).
+    public static let southAfrica = Country(rawValue: "South Africa")
+    /// Spain (`ES`).
+    public static let spain = Country(rawValue: "Spain")
+    /// Suriname (`SR`).
+    public static let suriname = Country(rawValue: "Suriname")
+    /// Sweden (`SE`).
+    public static let sweden = Country(rawValue: "Sweden")
+    /// Switzerland (`CH`).
+    public static let switzerland = Country(rawValue: "Switzerland")
+    /// Taiwan (Province of China) (`TW`).
+    public static let taiwan = Country(rawValue: "Taiwan (Province of China)")
+    /// Tanzania (`TZ`).
+    public static let tanzania = Country(rawValue: "Tanzania")
+    /// Thailand (`TH`).
+    public static let thailand = Country(rawValue: "Thailand")
+    /// Tonga (`TO`).
+    public static let tonga = Country(rawValue: "Tonga")
+    /// Tunisia (`TN`).
+    public static let tunisia = Country(rawValue: "Tunisia")
+    /// Türkiye (`TR`).
+    public static let turkiye = Country(rawValue: "Türkiye")
+    /// Tuvalu (`TV`).
+    public static let tuvalu = Country(rawValue: "Tuvalu")
+    /// United Arab Emirates (`AE`).
+    public static let unitedArabEmirates = Country(rawValue: "United Arab Emirates")
+    /// United Kingdom of Great Britain and Northern Ireland (`GB`).
+    public static let unitedKingdom = Country(rawValue: "United Kingdom of Great Britain and Northern Ireland")
+    /// United States of America (`US`).
+    public static let unitedStatesOfAmerica = Country(rawValue: "United States of America")
+    /// Uruguay (`UY`).
+    public static let uruguay = Country(rawValue: "Uruguay")
+    /// Vanuatu (`VU`).
+    public static let vanuatu = Country(rawValue: "Vanuatu")
+    /// Viet Nam (`VN`).
+    public static let vietNam = Country(rawValue: "Viet Nam")
+    /// Virgin Islands (British) (`VG`).
+    public static let virginIslandsBritish = Country(rawValue: "Virgin Islands (British)")
+    /// Virgin Islands (U.S.) (`VI`).
+    public static let virginIslandsUS = Country(rawValue: "Virgin Islands (U.S.)")
+
+    /// All 129 countries present in GLEIF ELF Code List v1.6.
+    public static let allKnown: [Country] = [
+        .antiguaAndBarbuda,
+        .argentina,
+        .armenia,
+        .aruba,
+        .australia,
+        .austria,
+        .azerbaijan,
+        .bahamas,
+        .bahrain,
+        .barbados,
+        .belarus,
+        .belgium,
+        .belize,
+        .benin,
+        .bermuda,
+        .bolivia,
+        .bonaireSintEustatiusAndSaba,
+        .botswana,
+        .brazil,
+        .bruneiDarussalam,
+        .bulgaria,
+        .cambodia,
+        .canada,
+        .caymanIslands,
+        .chile,
+        .china,
+        .colombia,
+        .cookIslands,
+        .costaRica,
+        .croatia,
+        .curacao,
+        .cyprus,
+        .czechia,
+        .denmark,
+        .dominicanRepublic,
+        .ecuador,
+        .estonia,
+        .faroeIslands,
+        .fiji,
+        .finland,
+        .france,
+        .germany,
+        .ghana,
+        .gibraltar,
+        .greece,
+        .guam,
+        .guatemala,
+        .guernsey,
+        .honduras,
+        .hongKong,
+        .hungary,
+        .iceland,
+        .india,
+        .indonesia,
+        .ireland,
+        .isleOfMan,
+        .israel,
+        .italy,
+        .jamaica,
+        .japan,
+        .jersey,
+        .jordan,
+        .koreaRepublicOf,
+        .kosovo,
+        .kuwait,
+        .latvia,
+        .lesotho,
+        .liechtenstein,
+        .lithuania,
+        .luxembourg,
+        .malaysia,
+        .malta,
+        .marshallIslands,
+        .mauritius,
+        .mexico,
+        .monaco,
+        .myanmar,
+        .nepal,
+        .netherlands,
+        .newZealand,
+        .niger,
+        .nigeria,
+        .northMacedonia,
+        .norway,
+        .oman,
+        .pakistan,
+        .panama,
+        .papuaNewGuinea,
+        .paraguay,
+        .peru,
+        .philippines,
+        .poland,
+        .portugal,
+        .puertoRico,
+        .qatar,
+        .romania,
+        .russianFederation,
+        .saintKittsAndNevis,
+        .saintVincentAndTheGrenadines,
+        .samoa,
+        .sanMarino,
+        .saudiArabia,
+        .serbia,
+        .seychelles,
+        .singapore,
+        .sintMaarten,
+        .slovakia,
+        .slovenia,
+        .solomonIslands,
+        .southAfrica,
+        .spain,
+        .suriname,
+        .sweden,
+        .switzerland,
+        .taiwan,
+        .tanzania,
+        .thailand,
+        .tonga,
+        .tunisia,
+        .turkiye,
+        .tuvalu,
+        .unitedArabEmirates,
+        .unitedKingdom,
+        .unitedStatesOfAmerica,
+        .uruguay,
+        .vanuatu,
+        .vietNam,
+        .virginIslandsBritish,
+        .virginIslandsUS,
+    ]
+
+    private static let toCode: [Country: CountryCodeISO3166_1] = [
+        .antiguaAndBarbuda: .ag,
+        .argentina: .ar,
+        .armenia: .am,
+        .aruba: .aw,
+        .australia: .au,
+        .austria: .at,
+        .azerbaijan: .az,
+        .bahamas: .bs,
+        .bahrain: .bh,
+        .barbados: .bb,
+        .belarus: .by,
+        .belgium: .be,
+        .belize: .bz,
+        .benin: .bj,
+        .bermuda: .bm,
+        .bolivia: .bo,
+        .bonaireSintEustatiusAndSaba: .bq,
+        .botswana: .bw,
+        .brazil: .br,
+        .bruneiDarussalam: .bn,
+        .bulgaria: .bg,
+        .cambodia: .kh,
+        .canada: .ca,
+        .caymanIslands: .ky,
+        .chile: .cl,
+        .china: .cn,
+        .colombia: .co,
+        .cookIslands: .ck,
+        .costaRica: .cr,
+        .croatia: .hr,
+        .curacao: .cw,
+        .cyprus: .cy,
+        .czechia: .cz,
+        .denmark: .dk,
+        .dominicanRepublic: .`do`,
+        .ecuador: .ec,
+        .estonia: .ee,
+        .faroeIslands: .fo,
+        .fiji: .fj,
+        .finland: .fi,
+        .france: .fr,
+        .germany: .de,
+        .ghana: .gh,
+        .gibraltar: .gi,
+        .greece: .gr,
+        .guam: .gu,
+        .guatemala: .gt,
+        .guernsey: .gg,
+        .honduras: .hn,
+        .hongKong: .hk,
+        .hungary: .hu,
+        .iceland: .`is`,
+        .india: .`in`,
+        .indonesia: .id,
+        .ireland: .ie,
+        .isleOfMan: .im,
+        .israel: .il,
+        .italy: .it,
+        .jamaica: .jm,
+        .japan: .jp,
+        .jersey: .je,
+        .jordan: .jo,
+        .koreaRepublicOf: .kr,
+        .kosovo: .xk,
+        .kuwait: .kw,
+        .latvia: .lv,
+        .lesotho: .ls,
+        .liechtenstein: .li,
+        .lithuania: .lt,
+        .luxembourg: .lu,
+        .malaysia: .my,
+        .malta: .mt,
+        .marshallIslands: .mh,
+        .mauritius: .mu,
+        .mexico: .mx,
+        .monaco: .mc,
+        .myanmar: .mm,
+        .nepal: .np,
+        .netherlands: .nl,
+        .newZealand: .nz,
+        .niger: .ne,
+        .nigeria: .ng,
+        .northMacedonia: .mk,
+        .norway: .no,
+        .oman: .om,
+        .pakistan: .pk,
+        .panama: .pa,
+        .papuaNewGuinea: .pg,
+        .paraguay: .py,
+        .peru: .pe,
+        .philippines: .ph,
+        .poland: .pl,
+        .portugal: .pt,
+        .puertoRico: .pr,
+        .qatar: .qa,
+        .romania: .ro,
+        .russianFederation: .ru,
+        .saintKittsAndNevis: .kn,
+        .saintVincentAndTheGrenadines: .vc,
+        .samoa: .ws,
+        .sanMarino: .sm,
+        .saudiArabia: .sa,
+        .serbia: .rs,
+        .seychelles: .sc,
+        .singapore: .sg,
+        .sintMaarten: .sx,
+        .slovakia: .sk,
+        .slovenia: .si,
+        .solomonIslands: .sb,
+        .southAfrica: .za,
+        .spain: .es,
+        .suriname: .sr,
+        .sweden: .se,
+        .switzerland: .ch,
+        .taiwan: .tw,
+        .tanzania: .tz,
+        .thailand: .th,
+        .tonga: .to,
+        .tunisia: .tn,
+        .turkiye: .tr,
+        .tuvalu: .tv,
+        .unitedArabEmirates: .ae,
+        .unitedKingdom: .gb,
+        .unitedStatesOfAmerica: .us,
+        .uruguay: .uy,
+        .vanuatu: .vu,
+        .vietNam: .vn,
+        .virginIslandsBritish: .vg,
+        .virginIslandsUS: .vi,
+    ]
 }

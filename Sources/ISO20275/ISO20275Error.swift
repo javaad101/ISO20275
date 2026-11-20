@@ -18,8 +18,6 @@ public enum ISO20275Error: Error, LocalizedError, Equatable, Sendable {
     case malformedRowColumnCount(row: Int, expected: Int, actual: Int)
     /// A required field in a CSV row was blank.
     case missingRequiredValue(row: Int, column: String)
-    /// A typed code or enum value in a CSV row did not match a known ISO standard value.
-    case unrecognizedCode(row: Int, column: String, value: String)
     /// A date string could not be parsed as an ISO 8601 calendar date (`YYYY-MM-DD`).
     case invalidISO8601Date(row: Int, column: String, value: String)
 
@@ -41,8 +39,6 @@ public enum ISO20275Error: Error, LocalizedError, Equatable, Sendable {
             return "Row \(row) has \(actual) columns, expected \(expected)."
         case .missingRequiredValue(let row, let column):
             return "Row \(row) is missing a required value for '\(column)'."
-        case .unrecognizedCode(let row, let column, let value):
-            return "Row \(row) contains unrecognized value '\(value)' for '\(column)'."
         case .invalidISO8601Date(let row, let column, let value):
             return "Row \(row) contains invalid ISO 8601 date '\(value)' for '\(column)' (expected YYYY-MM-DD)."
         }
